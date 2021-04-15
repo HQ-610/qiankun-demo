@@ -1,19 +1,23 @@
-import React from "react";
+import React, { useReducer } from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link
 } from "react-router-dom";
+import {useSelector, useDispatch} from 'react-redux'
 import About from './About'
 import Home from './Home'
 import User from './User'
+import './App.css'
 
 function App() {
+  const dispatch = useDispatch()
+  const state = useSelector(state => state)
   return (
     <Router>
-      <div>
-        <nav>
+      <div className="parent-container">
+        <nav className="parent-nav">
           <ul>
             <li>
               <Link to="/">Home</Link>
@@ -32,18 +36,27 @@ function App() {
             </li>
           </ul>
         </nav>
-        <Switch>
-        <Route path="/user">
-            <User />
-          </Route>
-          <Route path="/about">
-            <About />
-          </Route>
-          {/* 第一次子应用没匹配到都走到这儿来了 */}
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
+        <div className="parent-content" id="childRoot">
+          <Switch>
+            <Route path="/user">
+              <User />
+            </Route>
+            <Route path="/about">
+              <About />
+            </Route>
+            {/* 第一次子应用没匹配到都走到这儿来了 */}
+            <Route path="/">
+              <Home />
+            </Route>
+          </Switch>
+        </div>
+
+      </div>
+      <div className="global-state-manage">
+        <div>数据共享 demo</div>
+        <div>姓名：{state.name}</div>
+        <button onClick={() => dispatch({ type: 'changeName', payload: state.name === 'hjh' ? 'lh' : 'hjh' })}>修改名称</button>
+        <div>年龄：{state.age}</div><button onClick={() => dispatch({ type: 'changeAge', payload: state.age === 1 ? 18 : state.age - 1 })}>修改年龄</button>
       </div>
     </Router>
   );

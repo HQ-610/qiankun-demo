@@ -1,7 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { registerMicroApps, start } from 'qiankun';
+import { initGlobalState, registerMicroApps, start } from 'qiankun';
+import { Provider } from 'react-redux'
 import App from "./App";
+import store from './store'
+
+const microAppStateActions = initGlobalState(store)
 
 registerMicroApps([
   {
@@ -9,9 +13,17 @@ registerMicroApps([
     entry: '//localhost:3001',
     container: '#childRoot',
     activeRule: '/child',
+    props: {
+      sharedStore: store,
+      ...microAppStateActions
+    }
   },
 ]);
 
+
+
 start();
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(
+  <Provider store={store}><App /></Provider>
+  , document.getElementById("root"));

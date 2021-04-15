@@ -4,6 +4,7 @@ import { initGlobalState, registerMicroApps, start } from 'qiankun';
 import { Provider } from 'react-redux'
 import App from "./App";
 import store from './store'
+import sharedState from './shared'
 
 const microAppStateActions = initGlobalState(store)
 
@@ -14,7 +15,7 @@ registerMicroApps([
     container: '#childRoot',
     activeRule: '/child',
     props: {
-      sharedStore: store,
+      sharedState,
       ...microAppStateActions
     }
   },

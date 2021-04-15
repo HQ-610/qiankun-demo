@@ -1,6 +1,6 @@
 import { createStore } from 'redux'
 
-const initialState = { creator: { apply: 1 } };
+const initialState = { creator: { name: '创作中心' } };
 
 function reducer(state = initialState, action) {
     switch (action.type) {

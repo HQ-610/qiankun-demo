@@ -1,6 +1,9 @@
+import { useContext } from 'react'
 import { useSelector } from 'react-redux'
+import GlobalStateContext from './GlobalStateContext'
 function Home() {
-  const { name, age } = useSelector(state => state)
+  const microAppName = useSelector(state => state.creator.name)
+  const { name, age } = useContext(GlobalStateContext)
   return (
     <div>
       子应用 Home
@@ -10,7 +13,8 @@ function Home() {
       <p>age: {age}</p>
       <hr />
       {/* <p>微应用自己的数据 creator apply状态</p> */}
-      
+      <p>微应用数据 microAppName</p>
+      <p>name: {microAppName}</p>
     </div>
   );
 }

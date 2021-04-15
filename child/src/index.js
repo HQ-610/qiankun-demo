@@ -4,24 +4,19 @@ import ReactDOM from "react-dom";
 import { Provider } from 'react-redux'
 import store from './store'
 import App from "./App";
-
-const initialState = { globalState: null };
-
-function reducer(state, action) {
-  switch (action.type) {
-    case 'setGlobleState':
-      return { ...state, globalState: action.payload };
-    default:
-      return state
-  }
-}
+import GlobalStateContext from './GlobalStateContext'
 
 const render = (props = {}) => {
-  console.log(props)
   const { container } = props;
   ReactDOM.render(
-    <Provider store={window.__POWERED_BY_QIANKUN__ ? props.sharedStore : store}>
-      <App />
+    <Provider store={store}>
+      {
+        window.__POWERED_BY_QIANKUN__ ? (
+          <GlobalStateContext.Provider value={props.sharedState?.getGlobalStore()}>
+            <App />
+          </GlobalStateContext.Provider>
+        ) : (<App />)
+      }
     </Provider>
     , container ? container.querySelector('#root') : document.querySelector('#root'));
 };

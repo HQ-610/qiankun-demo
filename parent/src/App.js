@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -10,10 +10,16 @@ import About from './About'
 import Home from './Home'
 import User from './User'
 import './App.css'
+import microAppStateActions from './microAppStateActions'
 
 function App() {
   const dispatch = useDispatch()
   const state = useSelector(state => state)
+  // useEffect(() => {
+  //   microAppStateActions.onGlobalStateChange((state, prev) => {
+  //     console.log('主应用 onGlobalStateChange', state, prev)
+  //   }, true)
+  // }, [])
   return (
     <Router>
       <div className="parent-container">
